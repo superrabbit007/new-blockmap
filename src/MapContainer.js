@@ -2,6 +2,13 @@ import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './App.css';
 
+const style ={
+	width: '100%',
+	height: '100%',
+	positon: 'absolute'
+}
+
+
 class MapContainer extends Component {
 	render() {
 		return(
@@ -11,7 +18,8 @@ class MapContainer extends Component {
 				initialCenter={{
 					lat:22.543096, 
 	              	lng: 114.05786499999999
-				}}>
+				}}
+				style={style}>
 			</Map>
 		)
 	}

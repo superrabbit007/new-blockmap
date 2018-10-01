@@ -3,6 +3,12 @@ import './App.css';
 
 
 class Menu extends Component {
+
+
+	showNav() {
+		this.props.navChange();
+	}
+
 	render() {
 		return(
 			<div id="menu">

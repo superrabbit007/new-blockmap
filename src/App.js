@@ -8,21 +8,34 @@ import Menu from './Menu';
 class App extends Component {
 
   state={
-    location: locations
+    location: locations,
+    navShow: false
   }
 
+  navChange() {
+    if(!this.state.navShow) {
+      this.setState({
+        navShow: true
+      })
+    }else {
+      this.setState({navShow: false})
+    }
+  }
 
 
   render() {
   console.log(this.state.location);
     return (
-      <div className="App">
+      <div id="container">
         <Nav 
-          location={this.state.location}
-        />
-        <div>
-          <Menu />
-          <MapContainer/>
+        location={this.state.location}
+        navBar = {this.state.navShow}/>
+        <div className="main">
+          <Menu 
+            navChange={()=>this.navChange()}/>
+          <div className="map">
+              <MapContainer/>
+          </div>
         </div>
       </div>
     );

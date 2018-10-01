@@ -25,9 +25,9 @@ class Nav extends Component {
 		}else {
 			showLocations=this.props.location;
 		}
-		
+
 		return(
-			<nav className="">
+			<nav className={this.props.navBar? 'navOpen' : 'nav'}>
 				<div>
 					<h2>ShenZhen Locations</h2>
 					<div id="searchBox">
