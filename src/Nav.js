@@ -1,19 +1,31 @@
 import React, {Component} from 'react';
 import ListLocations from './ListLocations';
+import escapeRegExp from 'escape-string-regexp';
+
 
 class Nav extends Component {
 
-
+	state={
+		query: ''
+	}
 
 	updateQuery(query) {
-		if(query.trim() !== '') {
-			this.props.queryLocation(query);
-		}
+		this.setState({query: query});
+		// if(query.trim() !== '') {
+		// 	this.props.queryLocation(query);
+		// }
 	}
 
 	render() {
 
-
+		let showLocations;
+		if(this.state.query) {
+			const match= new RegExp(escapeRegExp(this.state.query), 'i');
+			showLocations = this.props.location.filter((loc)=>match.test(loc.title));
+		}else {
+			showLocations=this.props.location;
+		}
+		
 		return(
 			<nav className="">
 				<div>
@@ -22,13 +34,13 @@ class Nav extends Component {
 						<input
 							id="address"
 							type="text" 
-							
+							value={this.state.value}
 							placeholder="Station location"
 							onChange={(event)=>this.updateQuery(event.target.value)}/>
 						<button className="filter">Filter</button>
 					</div>
 					<ListLocations
-						location={this.props.location}/>
+						location={showLocations}/>
 				</div>
 			</nav>
 		)

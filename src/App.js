@@ -11,12 +11,6 @@ class App extends Component {
   }
 
 
-  queryLocation(query) {
-     // this.setState({})
-    this.state.location.filter((loc)=>{
-      loc.title
-    });
-  }
 
   render() {
   console.log(this.state.location);
@@ -24,7 +18,7 @@ class App extends Component {
       <div className="App">
         <Nav 
           location={this.state.location}
-          queryLocation={(query)=>this.queryLocation(query)}/>
+        />
       </div>
     );
   }
