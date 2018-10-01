@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import locations from './Locations.js';
-import Nav from './Nav'
+import Nav from './Nav';
+import MapContainer from './MapContainer'
 
 class App extends Component {
 
@@ -19,6 +19,7 @@ class App extends Component {
         <Nav 
           location={this.state.location}
         />
+        <MapContainer/>
       </div>
     );
   }
