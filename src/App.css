@@ -114,3 +114,7 @@ input {
 li {
   list-style-type: none;
 }
+
+#locList {
+  text-align: center;
+}

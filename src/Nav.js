@@ -10,12 +10,12 @@ class Nav extends Component {
 	}
 
 	updateQuery(query) {
+		console.log(query);
 		this.setState({query: query});
 		// if(query.trim() !== '') {
 		// 	this.props.queryLocation(query);(query);
 		// }
 		this.props.queryLocation(query);
-
 	}
 
 	render() {
@@ -27,6 +27,9 @@ class Nav extends Component {
 		// }else {
 		// 	showLocations=this.props.location;
 		// }
+		console.log(this.props.location);
+
+		// let {location, }
 
 		return(
 			<nav className={this.props.navBar? 'navOpen' : 'nav'}>
@@ -41,9 +44,9 @@ class Nav extends Component {
 					<button className="filter">Filter</button>
 				</div>
 				<div id="locList">				
-					{this.props.location.map((loc, index)=>(
+					{this.props.location.map(loc=>(
 						<li
-							key={index}>
+							key={loc.title}>
 							{loc.title}
 						</li>
 					))}		

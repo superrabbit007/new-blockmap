@@ -4,17 +4,21 @@ import locations from './Locations.js';
 import Nav from './Nav';
 import MapContainer from './MapContainer';
 import Menu from './Menu';
+import escapeRegExp from 'escape-string-regexp';
 
 class App extends Component {
 
   state={
     location: [],
-    navShow: false
+    navShow: false,
+    query: '',
+    showLocation : []
   }
 
   componentDidMount() {
     this.setState({
-      location: locations
+      location: locations,
+      showLocation: locations
     })
   }
 
@@ -29,8 +33,30 @@ class App extends Component {
     }
   }
 
-  queryLocation() {
-    
+  queryLocation = query =>{
+    this.setState({query : query});
+    let showLocations=[];
+    console.log(query);
+
+    if(query) {
+      const match= new RegExp(escapeRegExp(query), 'i');
+      console.log("this.state.location" + this.state.location);
+      showLocations = this.state.location.filter((loc)=>{
+        console.log("loc.title" + loc.title);
+        console.log("match.test(loc.title)" + match.test(loc.title));
+        return match.test(loc.title);
+      });
+      console.log("showLocations：" + showLocations);
+        this.setState({
+          showLocation: showLocations
+        })
+    }else {
+      showLocations=this.state.location;
+         this.setState({
+           showLocation: showLocations
+         })
+    }
+
   }
 
 
@@ -39,15 +65,15 @@ class App extends Component {
     return (
       <div id="container">
         <Nav 
-        location={this.state.location}
+        location={this.state.showLocation}
         navBar = {this.state.navShow}
-        queryLocation={(query)=>this.queryLocation(query)}/>
+        queryLocation={(query) =>this.queryLocation(query)}/>
         <div className="main">
           <Menu 
             navChange={()=>this.navChange()}/>
           <div className="map">
               <MapContainer
-                location={this.state.location}/>
+                location={this.state.showLocation}/>
           </div>
         </div>
       </div>
