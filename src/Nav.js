@@ -1,7 +1,19 @@
 import React, {Component} from 'react';
+import ListLocations from './ListLocations';
 
 class Nav extends Component {
+
+
+
+	updateQuery(query) {
+		if(query.trim() !== '') {
+			this.props.queryLocation(query);
+		}
+	}
+
 	render() {
+
+
 		return(
 			<nav className="">
 				<div>
@@ -15,16 +27,8 @@ class Nav extends Component {
 							onChange={(event)=>this.updateQuery(event.target.value)}/>
 						<button className="filter">Filter</button>
 					</div>
-					<div id="locList">
-					
-						{this.props.location.map((loc, index)=>(
-							<li
-								key={index}>
-								{loc.title}
-							</li>
-						))}
-						
-					</div>
+					<ListLocations
+						location={this.props.location}/>
 				</div>
 			</nav>
 		)
