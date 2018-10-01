@@ -10,6 +10,12 @@ const style ={
 
 
 class MapContainer extends Component {
+
+	onMarkerClick() {
+
+	}
+
+
 	render() {
 		return(
 			<Map
@@ -20,6 +26,15 @@ class MapContainer extends Component {
 	              	lng: 114.05786499999999
 				}}
 				style={style}>
+				{this.props.location.map((loc,index)=>( 
+	            	<Marker	
+	            		key={index}
+	            		title={loc.title}
+	            		position={loc.location}
+	            		onClick={(marker)=>this.onMarkerClick(marker)}
+	            	/>
+	            		// onMouseoverMarker={this.onMouseoverMarker}/>
+	            ))}
 			</Map>
 		)
 	}

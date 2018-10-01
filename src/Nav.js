@@ -12,35 +12,41 @@ class Nav extends Component {
 	updateQuery(query) {
 		this.setState({query: query});
 		// if(query.trim() !== '') {
-		// 	this.props.queryLocation(query);
+		// 	this.props.queryLocation(query);(query);
 		// }
+		this.props.queryLocation(query);
+
 	}
 
 	render() {
 
-		let showLocations;
-		if(this.state.query) {
-			const match= new RegExp(escapeRegExp(this.state.query), 'i');
-			showLocations = this.props.location.filter((loc)=>match.test(loc.title));
-		}else {
-			showLocations=this.props.location;
-		}
+		// let showLocations;
+		// if(this.state.query) {
+		// 	const match= new RegExp(escapeRegExp(this.state.query), 'i');
+		// 	showLocations = this.props.location.filter((loc)=>match.test(loc.title));
+		// }else {
+		// 	showLocations=this.props.location;
+		// }
 
 		return(
 			<nav className={this.props.navBar? 'navOpen' : 'nav'}>
-				<div>
-					<h2>ShenZhen Locations</h2>
-					<div id="searchBox">
-						<input
-							id="address"
-							type="text" 
-							value={this.state.value}
-							placeholder="Station location"
-							onChange={(event)=>this.updateQuery(event.target.value)}/>
-						<button className="filter">Filter</button>
-					</div>
-					<ListLocations
-						location={showLocations}/>
+				<h2>ShenZhen Locations</h2>
+				<div id="searchBox">
+					<input
+						id="address"
+						type="text" 
+						value={this.state.value}
+						placeholder="Station location"
+						onChange={(event)=>this.updateQuery(event.target.value)}/>
+					<button className="filter">Filter</button>
+				</div>
+				<div id="locList">				
+					{this.props.location.map((loc, index)=>(
+						<li
+							key={index}>
+							{loc.title}
+						</li>
+					))}		
 				</div>
 			</nav>
 		)

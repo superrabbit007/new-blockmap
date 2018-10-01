@@ -41,7 +41,7 @@ html, body {
 }
 
 .navOpen {
-  background-color: black;
+  background-color: wheat;
   width: 500px;
   transform: translate(0,0);
   z-index: 1000;

@@ -8,9 +8,16 @@ import Menu from './Menu';
 class App extends Component {
 
   state={
-    location: locations,
+    location: [],
     navShow: false
   }
+
+  componentDidMount() {
+    this.setState({
+      location: locations
+    })
+  }
+
 
   navChange() {
     if(!this.state.navShow) {
@@ -22,6 +29,10 @@ class App extends Component {
     }
   }
 
+  queryLocation() {
+    
+  }
+
 
   render() {
   console.log(this.state.location);
@@ -29,12 +40,14 @@ class App extends Component {
       <div id="container">
         <Nav 
         location={this.state.location}
-        navBar = {this.state.navShow}/>
+        navBar = {this.state.navShow}
+        queryLocation={(query)=>this.queryLocation(query)}/>
         <div className="main">
           <Menu 
             navChange={()=>this.navChange()}/>
           <div className="map">
-              <MapContainer/>
+              <MapContainer
+                location={this.state.location}/>
           </div>
         </div>
       </div>
