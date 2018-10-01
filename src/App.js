@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import locations from './Locations.js';
 import Nav from './Nav';
-import MapContainer from './MapContainer'
+import MapContainer from './MapContainer';
+import Menu from './Menu';
 
 class App extends Component {
 
@@ -19,7 +20,10 @@ class App extends Component {
         <Nav 
           location={this.state.location}
         />
-        <MapContainer/>
+        <div>
+          <Menu />
+          <MapContainer/>
+        </div>
       </div>
     );
   }

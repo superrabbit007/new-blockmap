@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import ListLocations from './ListLocations';
 import escapeRegExp from 'escape-string-regexp';
-
+import './App.css';
 
 class Nav extends Component {
 
