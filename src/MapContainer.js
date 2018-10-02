@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './App.css';
-import Foursquare from './Foursquare'
+// import Foursquare from './Foursquare'
 
 const style ={
 	width: '100%',
 	height: '100%',
-	positon: 'absolute'
+	position: 'absolute'
 }
+
+var foursquare = require('react-foursquare')({
+  clientID: 'AIRZBMKYSGK01J2WDA21RRZPY11IAV4HNUPCKLSNXOPVXJYE',
+  clientSecret: '3NLLSRLAXPC0R3RNGWD2CKFCHF0RP3XU3L2UVPOZAD3LQMXB'  
+});
 
 
 class MapContainer extends Component {
@@ -15,7 +20,8 @@ class MapContainer extends Component {
 		map: null,
 		currentMarker: {},
 		showingInfo: false,
-		selectLoc: null
+		selectLoc: null,
+		items:{}
 	}
 
 	// componentWillReciveProps(nextProps) {
@@ -30,16 +36,24 @@ class MapContainer extends Component {
 		console.log(props,marker);
 		console.log(this.state.showingInfo);
 		this.setState({
-				showingInfo: true,
-				currentMarker: marker,
-				selectLoc: props})
+			showingInfo: true,
+			currentMarker: marker,
+			selectLoc: props})
 		console.log(props.position);
+		if(this.state.selectLoc!==null) {
+			var loca=this.state.selectLoc.position;
+		    var ll=loca.lat+","+loca.lng;
+		    var query=this.props.location.title;
+			foursquare.venues.getVenues({ll,query})
+			.then(res=> {
+			console.log(res);
+			this.setState({ items: res.response.venues[0]})}
+			);	
+		}
 	}
 	
 
 	mapReady = (props, map) => {
-
-		// console.log(props, map);
 		this.setState({
 			map: map
 		});
@@ -54,6 +68,8 @@ class MapContainer extends Component {
 		for (var i = 0; i < locations.length; i++) {
 		  bounds.extend(locations[i].location);
 		}
+    	console.log(this.state.items.name);
+
 
 		return(
 			<Map
@@ -79,9 +95,9 @@ class MapContainer extends Component {
 	            <InfoWindow
 	            	visible={this.state.showingInfo}
 	            	marker={this.state.currentMarker}>
-	            	<h1>ok</h1>
-	            	<Foursquare
-	            		location={this.state.selectLoc} />
+					<h2>{this.state.selectLoc? this.state.selectLoc.title : ""}</h2>
+			        <div>Items:</div>
+			        {this.state.items?<div key={this.state.items.length}>{this.state.items.name}</div> : "None"}}
 	            </InfoWindow>
 			</Map>
 		)

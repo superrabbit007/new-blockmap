@@ -37,10 +37,10 @@ class Foursquare extends Component {
       var ll=loca.lat+","+loca.lng;
       var query=this.props.location.title;
       foursquare.venues.getVenues({ll,query})
-      .then(res=> {
-        console.log(res);
-        this.setState({ items: res.response.venues });
-      });
+      .then(res=> 
+        // console.log(res);
+        this.setState({ items: res.response.venues })
+      );
     }
     console.log(this.state.items);
     return (
