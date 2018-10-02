@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './App.css';
+import Foursquare from './Foursquare'
 
 const style ={
 	width: '100%',
@@ -29,9 +30,10 @@ class MapContainer extends Component {
 		console.log(props,marker);
 		console.log(this.state.showingInfo);
 		this.setState({
-			showingInfo: true,
-			currentMarker: marker,
-			selectLoc: props})
+				showingInfo: true,
+				currentMarker: marker,
+				selectLoc: props})
+		console.log(props.position);
 	}
 	
 
@@ -78,6 +80,8 @@ class MapContainer extends Component {
 	            	visible={this.state.showingInfo}
 	            	marker={this.state.currentMarker}>
 	            	<h1>ok</h1>
+	            	<Foursquare
+	            		location={this.state.selectLoc} />
 	            </InfoWindow>
 			</Map>
 		)

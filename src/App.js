@@ -73,7 +73,7 @@ class App extends Component {
             navChange={()=>this.navChange()}/>
           <div className="map">
               <MapContainer
-                location={this.state.showLocation}/>
+                location={this.state.location}/>
           </div>
         </div>
       </div>
