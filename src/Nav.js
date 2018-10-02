@@ -12,9 +12,6 @@ class Nav extends Component {
 	updateQuery(query) {
 		console.log(query);
 		this.setState({query: query});
-		// if(query.trim() !== '') {
-		// 	this.props.queryLocation(query);(query);
-		// }
 		this.props.queryLocation(query);
 	}
 

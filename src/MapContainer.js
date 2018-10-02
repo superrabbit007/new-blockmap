@@ -10,10 +10,39 @@ const style ={
 
 
 class MapContainer extends Component {
-
-	onMarkerClick() {
-
+	state={
+		map: null,
+		currentMarker: {},
+		showingInfo: false,
+		selectLoc: null
 	}
+
+	// componentWillReciveProps(nextProps) {
+	// 	console.log(nextProps);
+	// 	this.setState({
+	// 		showingInfo: true
+	// 		// currentMarker: 
+	// 	})
+	// }
+
+	onMarkerClick = (props,marker,e) => {
+		console.log(props,marker);
+		console.log(this.state.showingInfo);
+		this.setState({
+			showingInfo: true,
+			currentMarker: marker,
+			selectLoc: props})
+	}
+	
+
+	mapReady = (props, map) => {
+
+		// console.log(props, map);
+		this.setState({
+			map: map
+		});
+	}
+	
 
 
 	render() {
@@ -33,16 +62,23 @@ class MapContainer extends Component {
 	              	lng: 114.05786499999999
 				}}
 				style={style}
-				bounds={bounds}>
+				bounds={bounds}
+				onReady={this.mapReady}>
 				{this.props.location.map((loc,index)=>( 
 	            	<Marker	
 	            		key={index}
 	            		title={loc.title}
 	            		position={loc.location}
-	            		onClick={(marker)=>this.onMarkerClick(marker)}
+	            		ref={loc.title}
+	            		onClick={this.onMarkerClick}
 	            	/>
 	            		// onMouseoverMarker={this.onMouseoverMarker}/>
 	            ))}
+	            <InfoWindow
+	            	visible={this.state.showingInfo}
+	            	marker={this.state.currentMarker}>
+	            	<h1>ok</h1>
+	            </InfoWindow>
 			</Map>
 		)
 	}
