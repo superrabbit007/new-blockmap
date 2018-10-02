@@ -17,6 +17,13 @@ class MapContainer extends Component {
 
 
 	render() {
+		let locations=this.props.location;
+
+		var bounds = new this.props.google.maps.LatLngBounds();
+		for (var i = 0; i < locations.length; i++) {
+		  bounds.extend(locations[i].location);
+		}
+
 		return(
 			<Map
 				google={this.props.google}
@@ -25,7 +32,8 @@ class MapContainer extends Component {
 					lat:22.543096, 
 	              	lng: 114.05786499999999
 				}}
-				style={style}>
+				style={style}
+				bounds={bounds}>
 				{this.props.location.map((loc,index)=>( 
 	            	<Marker	
 	            		key={index}

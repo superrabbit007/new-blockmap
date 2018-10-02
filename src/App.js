@@ -33,7 +33,7 @@ class App extends Component {
     }
   }
 
-  queryLocation = query =>{
+  queryLocation(query) {
     this.setState({query : query});
     let showLocations=[];
     console.log(query);
