@@ -15,6 +15,11 @@ class Nav extends Component {
 		this.props.queryLocation(query);
 	}
 
+	show(loc) {
+		console.log(loc);
+		this.props.show(loc);
+	}
+
 	render() {
 
 		// let showLocations;
@@ -43,7 +48,8 @@ class Nav extends Component {
 				<div id="locList">				
 					{this.props.location.map(loc=>(
 						<li
-							key={loc.title}>
+							key={loc.title}
+							onClick={()=>this.show(loc)}>
 							{loc.title}
 						</li>
 					))}		

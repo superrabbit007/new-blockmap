@@ -24,13 +24,20 @@ class MapContainer extends Component {
 		item1:{}
 	}
 
-	// componentWillReciveProps(nextProps) {
-	// 	console.log(nextProps);
-	// 	this.setState({
-	// 		showingInfo: true
-	// 		// currentMarker: 
-	// 	})
-	// }
+	componentWillReciveProps(nextProps) {
+		console.log(this.props.selectLoc);
+		console.log(nextProps);
+		console.log(this.ref);
+		if(nextProps.selectLoc!== this.props.selectLoc) {
+			const markers = this.refs;
+			const marker= markers[nextProps.selectLoc.title].marker;
+			this.setState({
+				showingInfo: true,
+				currentMarker: marker,
+				selectLoc: nextProps.selectLoc
+			})
+		}
+	}
 
 	onMarkerClick = (props,marker,e) => {
 		console.log(props,marker);
@@ -66,6 +73,7 @@ class MapContainer extends Component {
 
 	render() {
 		let locations=this.props.location;
+		console.log(locations);
 
 		var bounds = new this.props.google.maps.LatLngBounds();
 		for (var i = 0; i < locations.length; i++) {
@@ -73,18 +81,30 @@ class MapContainer extends Component {
 		}
     	console.log(this.state.item1);
 
+    // 	var center = this.props.showLocation?this.props.showLocation[0].location:{
+				// 	lat:22.543096, 
+	   //            	lng: 114.05786499999999
+				// };
+		// if(this.props.showLocation.length===0) {
+		// 	console.log(this.props.showLocation);
+		// 	// console.log(this.props.showLocation[0].location);
+		// }else {
+		// 	console.log('none');
+		// }
+
+
 		return(
 			<Map
 				google={this.props.google}
 				zoom={15}
-				initialCenter={{
+				center={{
 					lat:22.543096, 
 	              	lng: 114.05786499999999
 				}}
 				style={style}
 				bounds={bounds}
 				onReady={this.mapReady}>
-				{this.props.location.map((loc,index)=>( 
+				{locations.map((loc,index)=>( 
 	            	<Marker	
 	            		key={index}
 	            		title={loc.title}

@@ -11,18 +11,16 @@ class App extends Component {
   state={
     location: [],
     navShow: false,
-    query: '',
-    showLocation : []
+    selectLoc: {}
   }
 
   componentDidMount() {
     this.setState({
-      location: locations,
-      showLocation: locations
+      location: locations
     })
   }
 
-
+//侧边栏显示
   navChange() {
     if(!this.state.navShow) {
       this.setState({
@@ -33,31 +31,40 @@ class App extends Component {
     }
   }
 
-  queryLocation(query) {
+//搜索列表查询（过滤）
+  filterLocation(query) {
     this.setState({query : query});
     let showLocations=[];
     console.log(query);
 
-    if(query) {
+    if(query!=="") {
       const match= new RegExp(escapeRegExp(query), 'i');
       console.log("this.state.location" + this.state.location);
-      showLocations = this.state.location.filter((loc)=>{
+      showLocations = locations.filter((loc)=>{
         console.log("loc.title" + loc.title);
         console.log("match.test(loc.title)" + match.test(loc.title));
         return match.test(loc.title);
       });
       console.log("showLocations：" + showLocations);
         this.setState({
-          showLocation: showLocations
+          location: showLocations
         })
     }else {
-      showLocations=this.state.location;
+        console.log(locations);
          this.setState({
-           showLocation: showLocations
+           location: locations
          })
     }
 
   }
+  //展示对应的marker
+  show(loc) {
+    this.setState({selectLoc: loc})
+  }
+
+  // showFilter() {
+
+  // }
 
 
   render() {
@@ -65,15 +72,17 @@ class App extends Component {
     return (
       <div id="container">
         <Nav 
-        location={this.state.showLocation}
+        location={this.state.location}
         navBar = {this.state.navShow}
-        queryLocation={(query) =>this.queryLocation(query)}/>
+        queryLocation={(query) =>this.filterLocation(query)}
+        show={(loc)=>this.show(loc)}/>
         <div className="main">
           <Menu 
             navChange={()=>this.navChange()}/>
           <div className="map">
               <MapContainer
-                location={this.state.location}/>
+                location={this.state.location}
+                selectLoc={this.state.selectLoc}/>
           </div>
         </div>
       </div>
