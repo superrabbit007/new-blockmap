@@ -81,27 +81,25 @@ class MapContainer extends Component {
 		  bounds.extend(locations[i].location);
 		}
     	console.log(this.state.item1);
-
-    // 	var center = this.props.showLocation?this.props.showLocation[0].location:{
-				// 	lat:22.543096, 
-	   //            	lng: 114.05786499999999
-				// };
-		// if(this.props.showLocation.length===0) {
-		// 	console.log(this.props.showLocation);
-		// 	// console.log(this.props.showLocation[0].location);
-		// }else {
-		// 	console.log('none');
-		// }
+    	//根据搜索结果，设置map center
+		let center;
+		if(this.props.location.length!==0 && this.props.location.length<9) {
+			console.log(this.props.location);
+			console.log(this.props.location[0].location);
+			center=this.props.location[0].location;
+			// console.log(this.props.showLocation[0].location);
+		}else {
+			console.log('none');
+			center={lat:22.543096, 
+	              	lng: 114.05786499999999}
+		}
 
 
 		return(
 			<Map
 				google={this.props.google}
 				zoom={15}
-				center={{
-					lat:22.543096, 
-	              	lng: 114.05786499999999
-				}}
+				center={center}
 				style={style}
 				bounds={bounds}
 				onReady={this.mapReady}>
