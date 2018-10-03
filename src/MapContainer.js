@@ -11,7 +11,7 @@ const style = {
 //引入FourSquare API
 var foursquare = require("react-foursquare")({
   clientID: "AIRZBMKYSGK01J2WDA21RRZPY11IAV4HNUPCKLSNXOPVXJYE",
-  clientSecret: "3NLLSRLAXPC0R3RNGWD2CKFCHF0RP3XU3L2UVPOZAD3LQMX"
+  clientSecret: "3NLLSRLAXPC0R3RNGWD2CKFCHF0RP3XU3L2UVPOZAD3LQMXB"
 });
 
 class MapContainer extends Component {
@@ -21,7 +21,8 @@ class MapContainer extends Component {
     showingInfo: false,
     selectLoc: null,
     item1: {},
-    item2: {}
+    item2: {},
+    errors: ''
   };
 
   /*处理搜索列表和地图的交互*/
@@ -66,16 +67,15 @@ class MapContainer extends Component {
     foursquare.venues
       .getVenues({ ll, query })
       .then(res => {
-        console.log(res);
         this.setState({
           item1: res.response.venues[0],
           item2: res.response.venues[1]
         });
       })
       .catch(error => {
-        console.log(error);
+      	console.log(error);
         this.setState({
-          item1: error
+          errors: 'Something wrong with foursquare'
         });
       });
   };
@@ -143,6 +143,7 @@ class MapContainer extends Component {
             <div>Items:</div>
             {this.state.item1 ? <p>{this.state.item1.name}</p> : "None"}
             {this.state.item2 ? <p>{this.state.item2.name}</p> : "None"}
+            {this.state.errors ? <p>{this.state.errors}</p> : ""}
             <p>(These data from FourSquare.)</p>
           </div>
         </InfoWindow>

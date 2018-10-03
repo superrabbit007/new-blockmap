@@ -29,7 +29,7 @@ class App extends Component {
     this.setState({ query: query });
     let showLocations = [];
 
-    if (query !== "") {
+    if (query.trim() !== "") {
       const match = new RegExp(escapeRegExp(query), "i");
       showLocations = locations.filter(loc => {
         return match.test(loc.title);
@@ -46,7 +46,6 @@ class App extends Component {
 
   /*展示搜索列表中点击的地点在地图上对应的marker*/
   showClickLoc(loc) {
-    console.log(loc);
     this.setState({ selectLoc: loc });
   }
 
