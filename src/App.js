@@ -31,7 +31,7 @@ class App extends Component {
     }
   }
 
-//搜索列表查询（过滤）
+//搜索过滤list和marker
   filterLocation(query) {
     this.setState({query : query});
     let showLocations=[];
@@ -55,16 +55,15 @@ class App extends Component {
            location: locations
          })
     }
-
   }
-  //展示对应的marker
+
+  /*展示搜索列表中点击的地点在地图上对应的marker*/
   showClickLoc(loc) {
     this.setState({selectLoc: loc})
   }
 
 
   render() {
-  console.log(this.state.location);
     return (
       <div id="container">
         <Nav 

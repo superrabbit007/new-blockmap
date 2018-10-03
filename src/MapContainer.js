@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import './App.css';
-// import Foursquare from './Foursquare'
 
 const style ={
 	width: '100%',
@@ -9,6 +8,7 @@ const style ={
 	position: 'absolute'
 }
 
+//引入FourSquare API
 var foursquare = require('react-foursquare')({
   clientID: 'AIRZBMKYSGK01J2WDA21RRZPY11IAV4HNUPCKLSNXOPVXJYE',
   clientSecret: '3NLLSRLAXPC0R3RNGWD2CKFCHF0RP3XU3L2UVPOZAD3LQMXB'  
@@ -21,10 +21,11 @@ class MapContainer extends Component {
 		currentMarker: {},
 		showingInfo: false,
 		selectLoc: null,
-		item1:{}
+		item1:{},
+		item2:{}
 	}
 
-	// componentWillReciveProps
+/*处理搜索列表和地图的交互*/
 	componentWillReceiveProps(nextProps) {
 		console.log(this.props.selectLoc);
 		console.log(nextProps);
@@ -37,83 +38,51 @@ class MapContainer extends Component {
 				currentMarker: marker,
 				selectLoc: nextProps.selectLoc
 			})
-			console.log(nextProps.selectLoc);
-			// if(nextProps.selectLoc!==this.props.selectLoc) {
-			// console.log(this.state.selectLoc);
-			if(nextProps.selectLoc!==null) {
-				let loca=nextProps.selectLoc.location;
-				this.searchClick(loca);
-
-				// let loca=nextProps.selectLoc.location;
-				// console.log(loca);
-			 //    let ll=loca.lat+","+loca.lng;
-			 //    let query=this.props.location.title;
-			 //    this.setState({item1: {}, item2: {}});
-				// foursquare.venues.getVenues({ll,query})
-				// .then(res=> {
-				// console.log(res);
-				// this.setState({ item1: res.response.venues[0],
-				// 	item2: res.response.venues[1]})}
-				// );	
-			};
+			//获取搜索列表中点击的地点并执行第三方API的查询
+			let loca=nextProps.selectLoc.location;
+			this.searchClick(loca);	
 		}; 
 	}
 
+/*处理marker点击*/
 	onMarkerClick = (props,marker,e) => {
 		console.log(props,marker);
 		console.log(this.state.showingInfo);
 		this.setState({
 			showingInfo: true,
 			currentMarker: marker,
-			selectLoc: props,
-			items:{} })
+			selectLoc: props})
 		console.log(props.position);
-		// if(this.state.selectLoc!==null) {
-		// 	let loca=this.state.selectLoc.position;
-		//     let ll=loca.lat+","+loca.lng;
-		//     let query=this.props.location.title;
-		//     this.setState({item1: {}, item2: {}});
-		// 	foursquare.venues.getVenues({ll,query})
-		// 	.then(res=> {
-		// 	console.log(res);
-		// 	this.setState({ item1: res.response.venues[0],
-		// 		item2: res.response.venues[1]})}
-		// 	);	
-		// }
+		//执行第三方API查询
 		if(this.state.selectLoc!==null){
 			let loca=this.state.selectLoc.position;
 			this.searchClick(loca);
 		}
-		// this.searchClick();
 	}
 	
-	/*通过foursquare查询相关信息（第三方API）*/
+/*通过foursquare查询相关信息（第三方API）*/
 	searchClick = (loca)=>{
-		console.log('test');
-		// if(this.state.selectLoc!==null) {
-		// 	var loca=this.state.selectLoc.position;
-		// 	console.log(loca);
-
-		    let ll=loca.lat+","+loca.lng;
-		    let query=this.props.location.title;
-		    this.setState({item1: {}, item2: {}});
-		    console.log('test');
-			foursquare.venues.getVenues({ll,query})
-			.then(res=> {
-			console.log(res);
-			this.setState({ item1: res.response.venues[0],
-				item2: res.response.venues[1]})}
-			);	
-		// }
+	    let ll=loca.lat+","+loca.lng;
+	    let query=this.props.location.title;
+	    this.setState({item1: {}, item2: {}});
+	    console.log('test');
+		foursquare.venues.getVenues({ll,query})
+		.then(res=> {
+		console.log(res);
+		this.setState({ 
+			item1: res.response.venues[0],
+			item2: res.response.venues[1]})
+		});	
 	}
 
-
+/*地图加载完成之后更新state*/
 	mapReady = (props, map) => {
 		this.setState({
 			map: map
 		});
 	}
 	
+/*处理地图点击*/
 	mapClick = (props)=> {
 		if(this.state.showingInfo) {
 			this.setState({
@@ -163,7 +132,6 @@ class MapContainer extends Component {
 	            		ref={loc.title}
 	            		onClick={this.onMarkerClick}
 	            	/>
-	            		// onMouseoverMarker={this.onMouseoverMarker}/>
 	            ))}
 	            <InfoWindow
 	            	visible={this.state.showingInfo}
