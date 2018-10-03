@@ -10,6 +10,7 @@ class Nav extends Component {
 
 /*展示点击的地点marker及信息*/
 	show(loc) {
+		console.log(loc);
 		this.props.showClickLoc(loc);
 	}
 
@@ -23,12 +24,14 @@ class Nav extends Component {
 						id="address"
 						type="text" 
 						placeholder="Station location"
+						aria-label="Search"
 						onChange={(event)=>this.updateQuery(event.target.value)}/>
-					<button className="filter">Filter</button>
+						<span>filter</span>
 				</div>
 				<div id="locList">				
 					{this.props.location.map(loc=>(
 						<li
+							role="button"
 							key={loc.title}
 							onClick={()=>this.show(loc)}>
 							{loc.title}

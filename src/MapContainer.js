@@ -65,6 +65,7 @@ class MapContainer extends Component {
 	    this.setState({item1: {}, item2: {}});
 		foursquare.venues.getVenues({ll,query})
 		.then(res=> {
+			console.log(res);
 		this.setState({ 
 			item1: res.response.venues[0],
 			item2: res.response.venues[1]})
