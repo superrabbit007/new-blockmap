@@ -24,7 +24,8 @@ class MapContainer extends Component {
 		item1:{}
 	}
 
-	componentWillReciveProps(nextProps) {
+	// componentWillReciveProps
+	componentWillReceiveProps(nextProps) {
 		console.log(this.props.selectLoc);
 		console.log(nextProps);
 		console.log(this.ref);

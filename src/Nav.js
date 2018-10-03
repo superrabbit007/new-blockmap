@@ -17,7 +17,7 @@ class Nav extends Component {
 
 	show(loc) {
 		console.log(loc);
-		this.props.show(loc);
+		this.props.showClickLoc(loc);
 	}
 
 	render() {

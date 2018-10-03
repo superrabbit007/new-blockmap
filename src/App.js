@@ -39,13 +39,13 @@ class App extends Component {
 
     if(query!=="") {
       const match= new RegExp(escapeRegExp(query), 'i');
-      console.log("this.state.location" + this.state.location);
+      // console.log("this.state.location" + this.state.location);
       showLocations = locations.filter((loc)=>{
-        console.log("loc.title" + loc.title);
-        console.log("match.test(loc.title)" + match.test(loc.title));
+        // console.log("loc.title" + loc.title);
+        // console.log("match.test(loc.title)" + match.test(loc.title));
         return match.test(loc.title);
       });
-      console.log("showLocations：" + showLocations);
+      // console.log("showLocations：" + showLocations);
         this.setState({
           location: showLocations
         })
@@ -58,13 +58,9 @@ class App extends Component {
 
   }
   //展示对应的marker
-  show(loc) {
+  showClickLoc(loc) {
     this.setState({selectLoc: loc})
   }
-
-  // showFilter() {
-
-  // }
 
 
   render() {
@@ -75,7 +71,7 @@ class App extends Component {
         location={this.state.location}
         navBar = {this.state.navShow}
         queryLocation={(query) =>this.filterLocation(query)}
-        show={(loc)=>this.show(loc)}/>
+        showClickLoc={(loc)=>this.showClickLoc(loc)}/>
         <div className="main">
           <Menu 
             navChange={()=>this.navChange()}/>
