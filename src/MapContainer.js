@@ -21,7 +21,7 @@ class MapContainer extends Component {
 		currentMarker: {},
 		showingInfo: false,
 		selectLoc: null,
-		items:{}
+		item1:{}
 	}
 
 	// componentWillReciveProps(nextProps) {
@@ -38,16 +38,19 @@ class MapContainer extends Component {
 		this.setState({
 			showingInfo: true,
 			currentMarker: marker,
-			selectLoc: props})
+			selectLoc: props,
+			items:{} })
 		console.log(props.position);
 		if(this.state.selectLoc!==null) {
 			var loca=this.state.selectLoc.position;
 		    var ll=loca.lat+","+loca.lng;
 		    var query=this.props.location.title;
+		    this.setState({item1: {}, item2: {}});
 			foursquare.venues.getVenues({ll,query})
 			.then(res=> {
 			console.log(res);
-			this.setState({ items: res.response.venues[0]})}
+			this.setState({ item1: res.response.venues[0],
+				item2: res.response.venues[1]})}
 			);	
 		}
 	}
@@ -68,8 +71,7 @@ class MapContainer extends Component {
 		for (var i = 0; i < locations.length; i++) {
 		  bounds.extend(locations[i].location);
 		}
-    	console.log(this.state.items.name);
-
+    	console.log(this.state.item1);
 
 		return(
 			<Map
@@ -97,7 +99,8 @@ class MapContainer extends Component {
 	            	marker={this.state.currentMarker}>
 					<h2>{this.state.selectLoc? this.state.selectLoc.title : ""}</h2>
 			        <div>Items:</div>
-			        {this.state.items?<div key={this.state.items.length}>{this.state.items.name}</div> : "None"}}
+			        {this.state.item1?<p>{this.state.item1.name}</p> : "None"}
+			        {this.state.item2?<p>{this.state.item2.name}</p> : "None"}
 	            </InfoWindow>
 			</Map>
 		)
