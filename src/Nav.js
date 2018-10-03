@@ -10,7 +10,6 @@ class Nav extends Component {
 
 /*展示点击的地点marker及信息*/
 	show(loc) {
-		console.log(loc);
 		this.props.showClickLoc(loc);
 	}
 
