@@ -28,7 +28,7 @@ class MapContainer extends Component {
 	componentWillReceiveProps(nextProps) {
 		console.log(this.props.selectLoc);
 		console.log(nextProps);
-		console.log(this.ref);
+		console.log(this.refs);
 		if(nextProps.selectLoc!== this.props.selectLoc) {
 			const markers = this.refs;
 			const marker= markers[nextProps.selectLoc.title].marker;
@@ -37,7 +37,26 @@ class MapContainer extends Component {
 				currentMarker: marker,
 				selectLoc: nextProps.selectLoc
 			})
-		}
+			console.log(nextProps.selectLoc);
+			// if(nextProps.selectLoc!==this.props.selectLoc) {
+			// console.log(this.state.selectLoc);
+			if(nextProps.selectLoc!==null) {
+				let loca=nextProps.selectLoc.location;
+				this.searchClick(loca);
+
+				// let loca=nextProps.selectLoc.location;
+				// console.log(loca);
+			 //    let ll=loca.lat+","+loca.lng;
+			 //    let query=this.props.location.title;
+			 //    this.setState({item1: {}, item2: {}});
+				// foursquare.venues.getVenues({ll,query})
+				// .then(res=> {
+				// console.log(res);
+				// this.setState({ item1: res.response.venues[0],
+				// 	item2: res.response.venues[1]})}
+				// );	
+			};
+		}; 
 	}
 
 	onMarkerClick = (props,marker,e) => {
@@ -49,20 +68,45 @@ class MapContainer extends Component {
 			selectLoc: props,
 			items:{} })
 		console.log(props.position);
-		if(this.state.selectLoc!==null) {
-			var loca=this.state.selectLoc.position;
-		    var ll=loca.lat+","+loca.lng;
-		    var query=this.props.location.title;
+		// if(this.state.selectLoc!==null) {
+		// 	let loca=this.state.selectLoc.position;
+		//     let ll=loca.lat+","+loca.lng;
+		//     let query=this.props.location.title;
+		//     this.setState({item1: {}, item2: {}});
+		// 	foursquare.venues.getVenues({ll,query})
+		// 	.then(res=> {
+		// 	console.log(res);
+		// 	this.setState({ item1: res.response.venues[0],
+		// 		item2: res.response.venues[1]})}
+		// 	);	
+		// }
+		if(this.state.selectLoc!==null){
+			let loca=this.state.selectLoc.position;
+			this.searchClick(loca);
+		}
+		// this.searchClick();
+	}
+	
+	/*通过foursquare查询相关信息（第三方API）*/
+	searchClick = (loca)=>{
+		console.log('test');
+		// if(this.state.selectLoc!==null) {
+		// 	var loca=this.state.selectLoc.position;
+		// 	console.log(loca);
+
+		    let ll=loca.lat+","+loca.lng;
+		    let query=this.props.location.title;
 		    this.setState({item1: {}, item2: {}});
+		    console.log('test');
 			foursquare.venues.getVenues({ll,query})
 			.then(res=> {
 			console.log(res);
 			this.setState({ item1: res.response.venues[0],
 				item2: res.response.venues[1]})}
 			);	
-		}
+		// }
 	}
-	
+
 
 	mapReady = (props, map) => {
 		this.setState({
@@ -70,6 +114,14 @@ class MapContainer extends Component {
 		});
 	}
 	
+	mapClick = (props)=> {
+		if(this.state.showingInfo) {
+			this.setState({
+			showingInfo: false,
+			currentMarker: null
+			});
+		}
+	}
 
 
 	render() {
@@ -87,7 +139,6 @@ class MapContainer extends Component {
 			console.log(this.props.location);
 			console.log(this.props.location[0].location);
 			center=this.props.location[0].location;
-			// console.log(this.props.showLocation[0].location);
 		}else {
 			console.log('none');
 			center={lat:22.543096, 
@@ -102,7 +153,8 @@ class MapContainer extends Component {
 				center={center}
 				style={style}
 				bounds={bounds}
-				onReady={this.mapReady}>
+				onReady={this.mapReady}
+				onClick={this.mapClick}>
 				{locations.map((loc,index)=>( 
 	            	<Marker	
 	            		key={index}
