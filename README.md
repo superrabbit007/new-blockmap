@@ -11,6 +11,6 @@
 >> #### a. https://www.npmjs.com/package/google-maps-react
 >> #### b. https://github.com/foursquare/react-foursquare
 >> #### c. http://www.itdaan.com/blog/2015/06/25/8dbdef237c739650794183ebf91d2f09.html
->> #### d.
+>> #### d.https://pewae.com/2014/12/yongcssdaitihanbaofuhao.html
 
 
