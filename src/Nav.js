@@ -1,37 +1,19 @@
 import React, {Component} from 'react';
-import ListLocations from './ListLocations';
-import escapeRegExp from 'escape-string-regexp';
 import './App.css';
 
 class Nav extends Component {
 
-	state={
-		query: ''
-	}
-
+/*搜索列表实时更新（地址列表和地图marker）*/
 	updateQuery(query) {
-		console.log(query);
-		this.setState({query: query});
 		this.props.queryLocation(query);
 	}
 
+/*展示点击的地点marker及信息*/
 	show(loc) {
-		console.log(loc);
 		this.props.showClickLoc(loc);
 	}
 
 	render() {
-
-		// let showLocations;
-		// if(this.state.query) {
-		// 	const match= new RegExp(escapeRegExp(this.state.query), 'i');
-		// 	showLocations = this.props.location.filter((loc)=>match.test(loc.title));
-		// }else {
-		// 	showLocations=this.props.location;
-		// }
-		console.log(this.props.location);
-
-		// let {location, }
 
 		return(
 			<nav className={this.props.navBar? 'navOpen' : 'nav'}>
@@ -40,7 +22,6 @@ class Nav extends Component {
 					<input
 						id="address"
 						type="text" 
-						value={this.state.value}
 						placeholder="Station location"
 						onChange={(event)=>this.updateQuery(event.target.value)}/>
 					<button className="filter">Filter</button>

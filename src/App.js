@@ -20,7 +20,7 @@ class App extends Component {
     })
   }
 
-//侧边栏显示
+/*侧边栏显示*/
   navChange() {
     if(!this.state.navShow) {
       this.setState({
@@ -31,29 +31,23 @@ class App extends Component {
     }
   }
 
-//搜索过滤list和marker
+/*搜索过滤list和marker*/
   filterLocation(query) {
     this.setState({query : query});
     let showLocations=[];
-    console.log(query);
 
     if(query!=="") {
       const match= new RegExp(escapeRegExp(query), 'i');
-      // console.log("this.state.location" + this.state.location);
       showLocations = locations.filter((loc)=>{
-        // console.log("loc.title" + loc.title);
-        // console.log("match.test(loc.title)" + match.test(loc.title));
         return match.test(loc.title);
       });
-      // console.log("showLocations：" + showLocations);
-        this.setState({
-          location: showLocations
-        })
+      this.setState({
+        location: showLocations
+      })
     }else {
-        console.log(locations);
-         this.setState({
-           location: locations
-         })
+      this.setState({
+       location: locations
+      })
     }
   }
 

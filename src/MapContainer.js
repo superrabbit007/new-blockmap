@@ -26,6 +26,7 @@ class MapContainer extends Component {
 	}
 
 /*处理搜索列表和地图的交互*/
+/*部分代码参考一对一讲解代码*/
 	componentWillReceiveProps(nextProps) {
 		console.log(this.props.selectLoc);
 		console.log(nextProps);
@@ -46,13 +47,10 @@ class MapContainer extends Component {
 
 /*处理marker点击*/
 	onMarkerClick = (props,marker,e) => {
-		console.log(props,marker);
-		console.log(this.state.showingInfo);
 		this.setState({
 			showingInfo: true,
 			currentMarker: marker,
 			selectLoc: props})
-		console.log(props.position);
 		//执行第三方API查询
 		if(this.state.selectLoc!==null){
 			let loca=this.state.selectLoc.position;
@@ -65,10 +63,8 @@ class MapContainer extends Component {
 	    let ll=loca.lat+","+loca.lng;
 	    let query=this.props.location.title;
 	    this.setState({item1: {}, item2: {}});
-	    console.log('test');
 		foursquare.venues.getVenues({ll,query})
 		.then(res=> {
-		console.log(res);
 		this.setState({ 
 			item1: res.response.venues[0],
 			item2: res.response.venues[1]})
@@ -95,21 +91,16 @@ class MapContainer extends Component {
 
 	render() {
 		let locations=this.props.location;
-		console.log(locations);
-
+		/*参考GoogleAPI文档，设置地图边界*/
 		var bounds = new this.props.google.maps.LatLngBounds();
 		for (var i = 0; i < locations.length; i++) {
 		  bounds.extend(locations[i].location);
 		}
-    	console.log(this.state.item1);
     	//根据搜索结果，设置map center
 		let center;
 		if(this.props.location.length!==0 && this.props.location.length<9) {
-			console.log(this.props.location);
-			console.log(this.props.location[0].location);
 			center=this.props.location[0].location;
 		}else {
-			console.log('none');
 			center={lat:22.543096, 
 	              	lng: 114.05786499999999}
 		}

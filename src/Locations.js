@@ -1,3 +1,4 @@
+/*默认展示的地点marker*/
 var locations=[
 	{title: '深圳高铁站', location: {lat: 22.609247, lng: 114.02877999999998}},
 	{title:'深圳红树湾', location:{lat: 22.53056, lng: 113.96632799999998}},
